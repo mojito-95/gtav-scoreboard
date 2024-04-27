@@ -138,6 +138,7 @@ hook.Add("ScoreboardHide", "Mojito.GTAV.ScoreboardHide", function()
 
 	if(frame != nil) then
 
+        gui.EnableScreenClicker(false)
         frame:Remove()
         frame = nil
 
