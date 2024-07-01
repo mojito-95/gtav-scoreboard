@@ -7,32 +7,36 @@ local firstBackgroundColor = Color(64, 93, 125, 235)
 local secondBackgroundColor = Color(55, 83, 113, 235)
 local iconBackgroundColor = Color(20, 20, 20, 255)
 
-surface.CreateFont("Mojito.GTAV.Title", {
+timer.Simple(1, function()
+
+    surface.CreateFont("Mojito.TabGTAV.Title", {
         size = ScrW() * 0.02,
-        weight = 500,
+        weight = 400,
         antialias = true,
         shadow = false,
         font = "Copyright House industries",
         extended = true,
-})
+    })
 
-surface.CreateFont("Mojito.GTAV.Medium", {
+surface.CreateFont("Mojito.TabGTAV.Medium", {
         size = ScrW() * 0.016,
-        weight = 400,
+        weight = 475,
         antialias = true,
         shadow = false,
         font = "Bahnschrift Light",
         extended = true,
-})
+    })
 
-surface.CreateFont("Mojito.GTAV.Light", {
+surface.CreateFont("Mojito.TabGTAV.Light", {
         size = ScrW() * 0.014,
-        weight = 500,
+        weight = 800,
         antialias = true,
         shadow = false,
         font = "Bahnschrift Light",
         extended = true,
-})
+    })
+
+end)
 
 local function DrawFrame()
 
@@ -47,7 +51,7 @@ local function DrawFrame()
 	frame.Paint = function(self, w, h)
 
         draw.RoundedBox(0, 0, 0, w, h * 0.08, backgroundColor)
-        draw.SimpleText(serverName, "Mojito.GTAV.Title", w / 2, h * 0.044, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(serverName, "Mojito.TabGTAV.Title", w / 2, h * 0.044, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	end
 
@@ -84,19 +88,19 @@ local function DrawFrame()
             if (string.len(v:Name()) > 22) then
 
                 local name = string.sub(v:Name(), 0, 22).. "..."
-                draw.SimpleText(name, "Mojito.GTAV.Medium", w * 0.176, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                draw.SimpleText(name, "Mojito.TabGTAV.Medium", w * 0.176, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
             else
 
-                draw.SimpleText(v:Name(), "Mojito.GTAV.Medium", w * 0.176, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                draw.SimpleText(v:Name(), "Mojito.TabGTAV.Medium", w * 0.176, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
             end
-            draw.SimpleText(v:Frags(), "Mojito.GTAV.Light", w * 0.736, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-            draw.SimpleText(v:Deaths(), "Mojito.GTAV.Light", w * 0.812, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(v:Frags(), "Mojito.TabGTAV.Light", w * 0.736, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(v:Deaths(), "Mojito.TabGTAV.Light", w * 0.812, h * 0.50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(color_white)
             surface.SetMaterial(planet)
             surface.DrawTexturedRect(w * 0.878, h * 0.1, w * 0.1, h * 0.8)
-            draw.SimpleText(v:Ping(), "Mojito.GTAV.Light", w * 0.9251, h * 0.50, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(v:Ping(), "Mojito.TabGTAV.Light", w * 0.9251, h * 0.50, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
         end
 
@@ -123,22 +127,22 @@ end
 
 hook.Add("ScoreboardShow", "Mojito.GTAV.ScoreboardShow", function()
 	
-    if(frame == nil) then
+    if(!IsValid(frame)) then
 
-        gui.EnableScreenClicker(true)
+        --gui.EnableScreenClicker(true)
         DrawFrame()
 
     end
 
-    return false
+    return true
 
 end)
 
 hook.Add("ScoreboardHide", "Mojito.GTAV.ScoreboardHide", function()
 
-	if(frame != nil) then
+	if(IsValid(frame)) then
 
-        gui.EnableScreenClicker(false)
+        --gui.EnableScreenClicker(false)
         frame:Remove()
         frame = nil
 
